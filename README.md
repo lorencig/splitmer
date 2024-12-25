@@ -1,58 +1,119 @@
-# Splitmer
-A tool to split large pdfs into individual chapters.
+Here’s the updated documentation specifically for `pdf_splitter_gui.py`:
 
+---
 
-## Installation
+# PDF Splitter GUI
 
-Clone Repository:
-    
-    - git clone https://github.com/qkcire/splitmer.git
+## Overview
 
-Download dependency:
-    
-    - pip install pypdf2
+`pdf_splitter_gui.py` is a PyQt6-based graphical application for splitting and merging PDF files into chapters. It provides an intuitive interface for selecting files, configuring chapters, and tracking the progress of the operation.
 
-## Instructions
+---
 
-First, create a `ch.txt` document and enumerate each chapter in the following format:
-    
-    [CH #] [CH_TITLE] [STARTING PAGE #] [ENDING PAGE #]
-Seperate each chapter with a newline.
+## Features
 
-### Example using http://discrete.openmathbooks.org/pdfs/dmoi-tablet.pdf
+- **File Selection**: Browse and select a PDF file, chapter configuration file (`ch.txt`), and an output folder.
+- **Chapter Splitting**: Splits the selected PDF into individual chapters based on the provided configuration.
+- **Interactive Progress Tracking**: Displays the status of each chapter's processing in a table and a progress bar.
+- **Error Handling**: Provides clear error messages and logs for debugging.
 
+---
 
-    00 introduction_and_preliminaries 1 56
-    01 counting 57 134
-    02 sequences 135 196
-    . . . 
-    05 additional_topics 295 324
+## Installation Guide
 
-Next, run script with the following format:
-    
-    python3 splitmer.py [*.pdf] ch.txt [PAGE # OFFSET]
+### Prerequisites
 
-Note: the [`PAGE # OFFSET`] argument variable is used to ignore the first pages of the pdf leading up to the first chapter. 
-To calculate the offset, navigate to the first chapter (which in our math pdf begins at page 17) and subtract 1. the offset is 16. 
+Ensure the following are installed:
+- Python 3.9+
+- PyQt6 (for GUI)
+- PyPDF2 (for PDF manipulation)
 
-Using the math textbook linked above, move the pdf into the same directory as the script along with the `ch.txt` document and begin the script as follows:
+### Steps to Install
 
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/lorencig/splitmer.git
+   ```
 
-    python3 splitmer.py dmoi-tablet.pdf ch.txt 16
+2. **Set Up a Virtual Environment**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate   # For Linux/Mac
+   venv\Scripts\activate      # For Windows
+   ```
 
-## Known issues and how to fix them
+3. **Install Dependencies**
+   ```bash
+   pip install PyQt6 PyPDF2
+   ```
 
-Once in a while you'll come across this error followed by a loop until the script crashes:
+---
 
-    $ python3 splitmer.py corrupted.pdf ch.txt 13
-    Splitting pdf . . .
-    Traceback (most recent call last):
-        File "splitmer.py", line 42, in <module>
-            splitter(cmnd_line_arg_list[0])
-        File "splitmer.py", line 19, in splitter
-            pdf_writer.write(out)
-    . . .
+## Usage
 
-From my research, this error has to do with the corrupted pdf metadata. To fix, install `ghostscript` and follow the instructions here: https://superuser.com/a/282056 
+### Running the Application
 
-Happy splitting and merging PDFs!
+Launch the GUI by running the script:
+```bash
+python pdf_splitter_gui.py
+```
+
+### Steps in the GUI
+
+1. **Select the PDF File**  
+   - Use the "Browse PDF" button to select the PDF file you want to split.
+
+2. **Select the Chapter File**  
+   - Use the "Browse ch.txt" button to select the chapter configuration file.
+   - The chapter file should follow this format:
+     ```
+     01 Chapter_Title_1 1 10
+     02 Chapter_Title_2 11 20
+     -
+     10 Chapter_Title_10 101 110
+     ```
+     Columns:
+     - Chapter number
+     - Chapter title
+     - Start page
+     - End page
+
+3. **Select the Output Folder**  
+   - Use the "Browse Output Folder" button to choose where the output files will be saved.
+
+4. **Start Processing**  
+   - Click the "Start Processing" button to begin splitting and merging chapters.
+   - The table will update with the processing status of each chapter.
+   - A progress bar will display the overall progress.
+
+5. **View Output**  
+   - Once processing is complete, the output files will be available in the selected folder.
+
+---
+
+## Notes
+
+- Ensure the chapter file (`ch.txt`) follows the required format for proper functionality.
+- The application handles errors gracefully. Any issues encountered during processing will be displayed in a message box.
+
+---
+
+## Example
+
+### Input
+- **PDF**: `sample.pdf`
+- **Chapter File (`ch.txt`)**:
+  ```
+  1 Introduction 1 5
+  2 Methods 6 15
+  3 Results 16 25
+  ```
+
+### Output
+- `Chapter_1_Introduction.pdf`
+- `Chapter_2_Methods.pdf`
+- `Chapter_3_Results.pdf`
+
+---
+
+Feel free to reach out if you encounter any issues or have further questions!
