@@ -116,4 +116,4 @@ python pdf_splitter_gui.py
 
 ---
 
-Feel free to reach out if you encounter any issues or have further questions!
+Kudos to https://github.com/qkcire
